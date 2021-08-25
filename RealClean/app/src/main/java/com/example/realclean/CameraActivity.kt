@@ -22,7 +22,7 @@ import org.opencv.core.Mat
 class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewListener2 {
     private lateinit var mRgba: Mat
     private lateinit var mGray: Mat
-    private lateinit var mOpenCvCameraView: CameraBridgeViewBase
+    private lateinit var binding : ActivityCameraBinding
 
     private val TAG = "CameraACTIVITY WOOYY"
 
@@ -31,7 +31,7 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
             when (status) {
                 LoaderCallbackInterface.SUCCESS -> {
                     Log.i(TAG, "OpenCV is loaded MANTAP !!")
-                    mOpenCvCameraView.enableView()
+                    binding.cameraFrameSurface.enableView()
                 }
                 else -> super.onManagerConnected(status)
             }
@@ -44,7 +44,7 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityCameraBinding.inflate(layoutInflater)
+        binding = ActivityCameraBinding.inflate(layoutInflater)
         val MY_PERMISSIONS_REQUEST_CAMERA = 0
 
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -73,6 +73,7 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
         super.onResume()
         if (OpenCVLoader.initDebug()) {
             Log.d(TAG, "OpenCV initialization is done !!!!")
+            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS)
         } else {
             Log.d(TAG, "OpenCV is NOT loaded. Try Again")
             OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_4_0, this, mLoaderCallback)
@@ -81,12 +82,12 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
 
     override fun onPause() {
         super.onPause()
-        mOpenCvCameraView.disableView()
+        binding.cameraFrameSurface.disableView()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mOpenCvCameraView.disableView()
+        binding.cameraFrameSurface.disableView()
     }
 
     override fun onCameraViewStarted(width: Int, height: Int) {
@@ -98,11 +99,9 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
         mRgba.release()
     }
 
-    override fun onCameraFrame(inputFrame: CameraBridgeViewBase.CvCameraViewFrame?): Mat {
-        if (inputFrame != null) {
-            mRgba = inputFrame.rgba()
-            mGray = inputFrame.gray()
-        }
+    override fun onCameraFrame(inputFrame: CameraBridgeViewBase.CvCameraViewFrame): Mat {
+        mRgba = inputFrame.rgba()
+        mGray = inputFrame.gray()
         return mRgba
     }
 }
