@@ -22,7 +22,7 @@ import org.opencv.core.Mat
 class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewListener2 {
     private lateinit var mRgba: Mat
     private lateinit var mGray: Mat
-    private lateinit var binding : ActivityCameraBinding
+    private lateinit var binding: ActivityCameraBinding
 
     private val TAG = "CameraACTIVITY WOOYY"
 
@@ -102,6 +102,15 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
     override fun onCameraFrame(inputFrame: CameraBridgeViewBase.CvCameraViewFrame): Mat {
         mRgba = inputFrame.rgba()
         mGray = inputFrame.gray()
+
+        // to get GRAY scaled display or if u want rgba to GRAY
+//        Imgproc.cvtColor(mRgba,mGray,Imgproc.COLOR_RGBA2GRAY)
+
+        // to get BGRA scaled display or if u want rgba to BGRA
+//        Imgproc.cvtColor(mRgba,mRgba,Imgproc.COLOR_RGBA2BGRA)
+
+        
+
         return mRgba
     }
 }
