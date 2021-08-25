@@ -1,5 +1,6 @@
 package com.example.realclean
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +25,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnOpenCam.setOnClickListener {
-
+            val toCamera = Intent(this,CameraActivity::class.java)
+            startActivity(toCamera)
         }
     }
 }
