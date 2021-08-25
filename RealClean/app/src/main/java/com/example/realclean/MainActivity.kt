@@ -11,9 +11,9 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         init {
-            if (OpenCVLoader.initDebug()){
+            if (OpenCVLoader.initDebug()) {
                 Log.d("WOOOOOY", "SUKSESSSSSSSSSS")
-            }else{
+            } else {
                 Log.d("WOOOOOY", "GAGAAALLLLLL")
             }
         }
@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnOpenCam.setOnClickListener {
-            val toCamera = Intent(this,CameraActivity::class.java)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            val toCamera = Intent(this@MainActivity, CameraActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(toCamera)
         }
     }
