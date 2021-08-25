@@ -17,6 +17,7 @@ import org.opencv.android.LoaderCallbackInterface
 import org.opencv.android.OpenCVLoader
 import org.opencv.core.CvType
 import org.opencv.core.Mat
+import org.opencv.imgproc.Imgproc
 
 
 class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewListener2 {
@@ -109,7 +110,9 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
         // to get BGRA scaled display or if u want rgba to BGRA
 //        Imgproc.cvtColor(mRgba,mRgba,Imgproc.COLOR_RGBA2BGRA)
 
-        
+        // to get Line display
+        val edges = Mat()
+        Imgproc.Canny(mRgba, edges, 80.0, 200.0)
 
         return mRgba
     }
