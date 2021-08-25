@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnOpenCam.setOnClickListener {
             val toCamera = Intent(this,CameraActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(toCamera)
         }
     }
